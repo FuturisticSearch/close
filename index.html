@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Triggering Macro...</title>
+  <script>
+    window.onload = function() {
+      // Send GET request to MacroDroid webhook
+      fetch("https://trigger.macrodroid.com/7cb97aab-fe0b-405b-ad52-3faff6ac980a/close")
+        .catch(error => {
+          console.error("Error triggering macro:", error);
+        });
+
+      // Wait a short time to ensure the request goes through, then go back
+      setTimeout(function() {
+        // Redirect back to the referring page
+        if (document.referrer) {
+          window.location.href = document.referrer;
+        } else {
+          // If no referrer is available, fallback to a default URL
+          window.location.href = "https://example.com";
+        }
+      }, 1000); // Delay 1 second to allow fetch to fire
+    };
+  </script>
+</head>
+<body>
+  <p>Triggering your MacroDroid action... Redirecting.</p>
+</body>
+</html>
