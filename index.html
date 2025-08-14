@@ -2,29 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Triggering Macro...</title>
-  <script>
-    window.onload = function() {
-      // Send GET request to MacroDroid webhook
-      fetch("https://trigger.macrodroid.com/7cb97aab-fe0b-405b-ad52-3faff6ac980a/close")
-        .catch(error => {
-          console.error("Error triggering macro:", error);
-        });
+  <title>Click to Unlock</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
 
-      // Wait a short time to ensure the request goes through, then go back
-      setTimeout(function() {
-        // Redirect back to the referring page
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Click to Unlock</h1>
+  <button onclick="triggerAndRedirect()">Unlock</button>
+
+  <script>
+    function triggerAndRedirect() {
+      // Trigger the MacroDroid webhook
+      fetch("https://trigger.macrodroid.com/7cb97aab-fe0b-405b-ad52-3faff6ac980a/close")
+        .catch(err => console.error("Failed to trigger MacroDroid:", err));
+
+      // After short delay, redirect back
+      setTimeout(() => {
         if (document.referrer) {
           window.location.href = document.referrer;
         } else {
-          // If no referrer is available, fallback to a default URL
+          // Fallback URL if no referrer
           window.location.href = "https://example.com";
         }
-      }, 1000); // Delay 1 second to allow fetch to fire
-    };
+      }, 1000); // 1 second delay to allow fetch to process
+    }
   </script>
-</head>
-<body>
-  <p>Triggering your MacroDroid action... Redirecting.</p>
 </body>
 </html>
